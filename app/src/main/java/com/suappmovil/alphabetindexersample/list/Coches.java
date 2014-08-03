@@ -8,7 +8,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -24,14 +23,12 @@ import static com.suappmovil.alphabetindexersample.content.Coches.getUriRead;
  * A fragment representing a list of Items.
  * <p/>
  * <p/>
- * Activities containing this fragment MUST implement the {@link Callbacks}
  * interface.
  */
 public class Coches extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private OnListCochesListener mListener;
     private com.suappmovil.alphabetindexersample.adapter.Coches mAdapter;
-    private String mCurFilter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -129,13 +126,7 @@ public class Coches extends ListFragment implements LoaderManager.LoaderCallback
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         Uri uri = getUriRead();
-        String selection = null;
-        String[] selectionArgs = null;
-        if (mCurFilter != null) {
-            selection = "Marca LIKE ?";
-            selectionArgs = new String[]{"%" + mCurFilter + "%"};
-        }
-        return new CursorLoader(this.getActivity().getBaseContext(), uri, null, selection, selectionArgs, "Marca COLLATE NOCASE,Modelo COLLATE NOCASE,Version COLLATE NOCASE");
+        return new CursorLoader(this.getActivity().getBaseContext(), uri, null, null,null, "Marca COLLATE NOCASE,Modelo COLLATE NOCASE,Version COLLATE NOCASE");
     }
 
     @Override
@@ -150,9 +141,6 @@ public class Coches extends ListFragment implements LoaderManager.LoaderCallback
         // The list should now be shown.
     }
 
-    private ActionBarActivity getActionBarActivity() {
-        return (ActionBarActivity) getActivity();
-    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
